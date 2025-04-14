@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMAKAI Scratch Card - Izakaya Style</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .scratch-card {
+            width: 320px;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+            color: #f0f0f0;
+            border: 2px solid #FF6600;
+        }
+        .card-header {
+            position: relative;
+            background-color: #FF6600;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            background-image: linear-gradient(45deg, #FF6600 25%, transparent 25%, transparent 50%, #FF6600 50%, #FF6600 75%, transparent 75%, transparent);
+            background-size: 10px 10px;
+        }
+        .card-header:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background-image: repeating-linear-gradient(45deg, #FF6600, #FF6600 10px, transparent 10px, transparent 20px);
+        }
+        .card-title {
+            font-size: 26px;
+            margin: 0;
+            font-weight: bold;
+            font-family: 'Impact', sans-serif;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0 #000;
+        }
+        .card-subtitle {
+            font-size: 14px;
+            margin: 5px 0 0;
+            font-style: italic;
+        }
+        .scratch-area {
+            position: relative;
+            height: 180px;
+            margin: 25px 15px 15px;
+            border: 3px solid #FF6600;
+            border-radius: 5px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #221a12;
+        }
+        .scratch-cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #FF6600;
+            background-image: 
+                linear-gradient(45deg, rgba(0,0,0,0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1) 75%, transparent 75%, transparent),
+                radial-gradient(circle at 50% 50%, #FF8033 0%, #FF6600 70%);
+            background-size: 10px 10px, 100% 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 22px;
+            z-index: 10;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        .prize {
+            text-align: center;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #FF6600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%23FF6600" stroke-width="2"/><path d="M30,30 L70,70 M30,70 L70,30" stroke="%23FF6600" stroke-width="2"/></svg>');
+            background-size: 20px 20px;
+            background-repeat: repeat;
+        }
+        .prize-content {
+            background-color: rgba(34, 26, 18, 0.9);
+            padding: 15px;
+            border-radius: 5px;
+            width: 80%;
+            border: 1px solid #FF6600;
+        }
+        .instructions {
+            text-align: center;
+            padding: 15px;
+            border-top: 1px dashed #FF6600;
+            font-size: 12px;
+            color: #aaa;
+        }
+        .logo {
+            width: 90px;
+            height: 90px;
+            background-color: #221a12;
+            border: 3px solid #FF6600;
+            color: #FF6600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 0 auto 10px;
+            position: relative;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .logo:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="%23FF6600" stroke-width="2"/><path d="M25,50 L75,50 M50,25 L50,75" stroke="%23FF6600" stroke-width="2"/></svg>');
+            background-size: cover;
+            opacity: 0.15;
+        }
+        .logo-text {
+            position: relative;
+            z-index: 1;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+            font-family: 'Impact', sans-serif;
+            letter-spacing: 1px;
+            font-size: 22px;
+        }
+        .prizes-list {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .prize-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            background-color: #221a12;
+            border: 2px solid #FF6600;
+            color: #FF6600;
+            text-align: center;
+            padding: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        .prize-icon:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 50% 50%, #FF8033 0%, transparent 70%);
+            opacity: 0.2;
+        }
+        .lanterns {
+            position: absolute;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+        }
+        .lantern {
+            width: 20px;
+            height: 30px;
+            background-color: #FF6600;
+            border-radius: 50% 50% 5px 5px;
+            position: relative;
+        }
+        .lantern:before {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 5px;
+            background-color: #FF6600;
+            border-radius: 0 0 5px 5px;
+        }
+        .btn-scratch {
+            background-color: #FF6600;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+        .btn-scratch:hover {
+            background-color: #FF8033;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 8px rgba(0,0,0,0.3);
+        }
+        /* Animation for scratch effect simulation */
+        .simulated {
+            animation: scratchOff 2s forwards;
+        }
+        @keyframes scratchOff {
+            0% { 
+                opacity: 1; 
+                background-position: 0% 0%, 0% 0%;
+            }
+            30% {
+                background-position: 20% 20%, 0% 0%;
+                opacity: 0.7;
+            }
+            60% {
+                background-position: 40% 40%, 0% 0%;
+                opacity: 0.4;
+            }
+            100% { 
+                opacity: 0; 
+                visibility: hidden; 
+                background-position: 100% 100%, 0% 0%;
+            }
+        }
+        .japanese-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M0,20 Q10,0 20,20 T40,20 M20,0 Q20,10 40,20 T20,40 T0,20" fill="none" stroke="%23FF6600" stroke-width="0.5" opacity="0.3"/></svg>');
+            background-size: 40px 40px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="scratch-card">
+        <div class="japanese-pattern"></div>
+        <div class="card-header">
+            <div class="logo">
+                <span class="logo-text">UMAKAI</span>
+            </div>
+            <h1 class="card-title">TRY YOUR LUCK</h1>
+            <p class="card-subtitle">SCRATCH & WIN</p>
+        </div>
+        
+        <div class="lanterns">
+            <div class="lantern"></div>
+            <div class="lantern"></div>
+            <div class="lantern"></div>
+        </div>
+        
+        <div class="scratch-area">
+            <div id="prize" class="prize">
+                <div class="prize-content">
+                    <div>🎉 CONGRATULATIONS! 🎉</div>
+                    <div style="font-size: 20px; color: #FF6600; margin: 10px 0;">SKEWER ASSORTMENT</div>
+                </div>
+            </div>
+            <div id="scratch-cover" class="scratch-cover">
+                <div>
+                    <div>SCRATCH HERE</div>
+                    <button id="btn-simulate" class="btn-scratch">Scratch</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="prizes-list">
+            <div class="prize-icon">UMAKAI<br>T-shirt</div>
+            <div class="prize-icon">UMACAN<br>Drink</div>
+            <div class="prize-icon">Yakitori<br>Skewers</div>
+        </div>
+        
+        <div class="instructions">
+            Present this card to your server to claim your prize.<br>
+            Valid until 12/31/2025. Cannot be combined with other offers.
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('btn-simulate').addEventListener('click', function() {
+            document.getElementById('scratch-cover').classList.add('simulated');
+        });
+    </script>
+</body>
+</html>
